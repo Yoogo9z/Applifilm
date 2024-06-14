@@ -1,25 +1,22 @@
 package com.example.appli_film
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.appli_film.ui.theme.ApplifilmTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,77 +24,63 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ApplifilmTheme {
-                Scaffold (modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Bonsoir",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    ) {
+                        SearchBarWithIcon()
+                    }
                 }
             }
         }
     }
 }
 
-
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Surface (color = Color.Red) {
-        Text(
-            text = "Oui $name",
-            modifier = modifier)
-        Text(
-            text = "Ok $name",
-            modifier = Modifier.padding(24.dp))
+fun SearchBarWithIcon() {
+    var textState by remember { mutableStateOf(TextFieldValue("")) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .height(56.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        BasicTextField(
+            value = textState,
+            onValueChange = { textState = it },
+            modifier = Modifier
+                .weight(1f)
+                .background(Color.LightGray)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            decorationBox = { innerTextField ->
+                if (textState.text.isEmpty()) {
+                    Text(text = "Search", color = Color.Gray)
+                }
+                innerTextField()
+            }
+        )
+        Icon(
+            Icons.Filled.Search,
+            contentDescription = "Search Icon",
+            modifier = Modifier.size(24.dp),
+            tint = Color.Black
+        )
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun SearchBarWithIconPreview() {
     ApplifilmTheme {
-//        Greeting("Android")
-        Scaffold(modifier = Modifier.fillMaxSize()) {  innerPadding ->
-            Column(modifier = Modifier.padding(start = 25.dp)) {
-                Text(
-                    text = "Ok",
-                    modifier = Modifier.padding(24.dp)
-                )
-                Text(
-                    text = "Ok",
-                    modifier = Modifier.padding(24.dp)
-                )
-                Text(
-                    text = "Ok",
-                    modifier = Modifier.padding(24.dp)
-                )
-                Text(
-                    text = "Ok",
-                    modifier = Modifier.padding(24.dp)
-                )
-                Text(
-                    text = "Ok",
-                    modifier = Modifier.padding(24.dp)
-                )
-
-            }
-        }
-    }
-}
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Composable
-fun Greeting() {
-    ApplifilmTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) {  innerPadding ->
-            Column(modifier = Modifier.padding(start = 25.dp)) {
-                Text(
-                    text = "Ok",
-                    modifier = Modifier.padding(24.dp)
-
-                )
-                Icon(Icons.Filled.PlayArrow, contentDescription = "" )
-            }
+        Scaffold {
+            SearchBarWithIcon()
         }
     }
 }
