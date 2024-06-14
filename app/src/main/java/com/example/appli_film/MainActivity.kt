@@ -7,10 +7,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.sharp.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -44,63 +47,104 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Movie() {
+fun SearchBarWithIcon() {
     var textState by remember { mutableStateOf(TextFieldValue("")) }
 
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .height(56.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            Icons.Filled.Home,
-            contentDescription = "Home Icon",
-            modifier = Modifier.size(24.dp),
-            tint = Color.Black
-        )
-        BasicTextField(
-            value = textState,
-            onValueChange = { textState = it },
+        Row(
             modifier = Modifier
-                .weight(1f)
-                .background(Color.LightGray)
-                .padding(horizontal = 16.dp, vertical = 12.dp)
-                .widthMax(max = 8.dp), // Utilisation de widthIn pour une largeur minimale de 64 dp
-            decorationBox = { innerTextField ->
-                if (textState.text.isEmpty()) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            Icons.Filled.Search,
-                            contentDescription = "Search Icon",
-                            modifier = Modifier.size(16.dp),
-                            tint = Color.Gray
-                        )
-                        Spacer(modifier = Modifier.width(8.dp)) // Espace entre l'icône et le texte
-                        Text(
-                            text = "Rechercher un film",
-                            color = Color.Gray
-                        )
+                .height(56.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                Icons.Filled.Home,
+                contentDescription = "Home Icon",
+                modifier = Modifier.size(24.dp),
+                tint = Color.Black
+            )
+            Spacer(modifier = Modifier.width(100.dp))
+            BasicTextField(
+                value = textState,
+                onValueChange = { textState = it },
+                modifier = Modifier
+                    .weight(1f)
+                    .background(Color.LightGray, RoundedCornerShape(8.dp))
+                    .padding(vertical = 12.dp, horizontal = 16.dp)
+                    .height(20.dp),
+                decorationBox = { innerTextField ->
+                    if (textState.text.isEmpty()) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                Icons.Filled.Search,
+                                contentDescription = "Search Icon",
+                                modifier = Modifier.size(16.dp),
+                                tint = Color.Gray
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Rechercher un film",
+                                color = Color.Gray
+                            )
+                        }
+                    } else {
+                        innerTextField()
                     }
-                } else {
-                    innerTextField()
                 }
-            }
+            )
+        }
+        Row(
+            modifier = Modifier
+                .height(56.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
         )
+        {
+
+        }
+        Row(
+            modifier = Modifier
+                .height(56.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        )
+        {
+            Icon(
+                Icons.Filled.Star,
+                contentDescription = "Star Icon",
+                modifier = Modifier.size(18.dp),
+                tint = Color.Black
+            )
+            Icon(
+                Icons.Filled.Star,
+                contentDescription = "Star Icon",
+                modifier = Modifier.size(18.dp),
+                tint = Color.Black
+            )
+            Icon(
+                Icons.Filled.Star,
+                contentDescription = "Star Icon",
+                modifier = Modifier.size(18.dp),
+                tint = Color.Black
+            )
+            Icon(
+                Icons.Filled.Star,
+                contentDescription = "Star Icon",
+                modifier = Modifier.size(18.dp),
+                tint = Color.Black
+            )
+            Icon(
+                Icons.Sharp.Star,
+                contentDescription = "Star Icon",
+                modifier = Modifier.size(18.dp),
+                tint = Color.Black
+            )
+        }
     }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .height(56.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    )
-    text
-
 }
 
 
@@ -108,7 +152,7 @@ fun Movie() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(showBackground = true)
 @Composable
-fun Movie() {
+fun MoviePreview() {
     ApplifilmTheme {
         Scaffold {
             SearchBarWithIcon()
