@@ -5,8 +5,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
@@ -19,10 +22,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.appli_film.ui.theme.ApplifilmTheme
+import com.example.appli_film.R
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +56,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun SearchBarWithIcon() {
     var textState by remember { mutableStateOf(TextFieldValue("")) }
+    val images = listOf(
+        painterResource(R.drawable.image1),
+        painterResource(R.drawable.image2),
+        painterResource(R.drawable.image3)
+        // Add more images as needed
+    )
 
     Column(
         modifier = Modifier
@@ -97,22 +110,23 @@ fun SearchBarWithIcon() {
                 }
             )
         }
+
         Row(
             modifier = Modifier
                 .height(56.dp),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
-        )
-        {
-
+        ) {
+            Text(
+                text = "Halo"
+            )
         }
         Row(
             modifier = Modifier
                 .height(56.dp),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
-        )
-        {
+        ) {
             Icon(
                 Icons.Filled.Star,
                 contentDescription = "Star Icon",
@@ -144,10 +158,46 @@ fun SearchBarWithIcon() {
                 tint = Color.Black
             )
         }
+        Row(
+            modifier = Modifier
+                .height(56.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "4.1/5",
+                modifier = Modifier
+            )
+        }
+
+        Row(
+            modifier = Modifier
+                .height(130.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxHeight()
+            ) {
+                items(images) { image ->
+                    Image(
+                        painter = image,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .width(130.dp)  // Adjust the width as needed
+                            .height(130.dp)
+                            .aspectRatio(1f),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            }
+        }
+
     }
 }
-
-
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(showBackground = true)
