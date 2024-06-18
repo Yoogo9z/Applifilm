@@ -10,8 +10,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
@@ -43,13 +45,54 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
-                        SearchBarWithIcon()
-                        Avis()
-                        List(images = listOf(
-                            painterResource(R.drawable.image1),
-                            painterResource(R.drawable.image2),
-                            painterResource(R.drawable.image3)
-                        ))
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                        ) {
+                            Box {
+                                Image(
+                                    painter = painterResource(R.drawable.imagehalo),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(Color.Black),
+                                    contentScale = ContentScale.Crop
+                                )
+                                Box(
+                                    modifier = Modifier
+                                        .background(Color(0f, 0f, 0f, 0.75f))
+                                        .fillMaxSize()
+                                )
+
+                            }
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .fillMaxWidth()
+                                    .padding(innerPadding)
+                                    .padding(start = 16.dp)
+                            ) {
+                                Box(
+                                    Modifier
+                                        .weight(1f)
+                                        .fillMaxHeight()
+                                        .fillMaxWidth()
+                                ) {
+                                    SearchBarWithIcon()
+                                }
+                                Spacer(modifier = Modifier.weight(2.25f))
+                                Avis(Modifier.weight(2.5f))
+                                Spacer(modifier = Modifier.weight(2.25f))
+                                List(
+                                    images = listOf(
+                                        painterResource(R.drawable.image1),
+                                        painterResource(R.drawable.image2),
+                                        painterResource(R.drawable.image3)
+                                    ),
+                                    modifier = Modifier.weight(2f)
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -57,17 +100,19 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun SearchBarWithIcon() {
+    fun SearchBarWithIcon(modifier: Modifier = Modifier) {
         var textState by remember { mutableStateOf(TextFieldValue("")) }
-        Column {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+        ) {
             Box(
                 Modifier
-                    .background(Color.Red)
+//                    .background(Color.Red)
                     .fillMaxWidth()
-                    .weight(1f)
             ) {
                 Row(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxHeight(),
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically
@@ -76,7 +121,7 @@ class MainActivity : ComponentActivity() {
                         Icons.Filled.Home,
                         contentDescription = "Home Icon",
                         modifier = Modifier.size(30.dp),
-                        tint = Color.Black
+                        tint = Color.White
                     )
                     Spacer(modifier = Modifier.width(100.dp))
                     BasicTextField(
@@ -109,42 +154,38 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             }
-
-            Spacer(Modifier.weight(2.25f))
-
-            Spacer(Modifier.weight(2.25f))
         }
     }
 
     @Composable
-    fun Avis() {
+    fun Avis(modifier: Modifier = Modifier) {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
         ) {
             Box(
                 Modifier
-                    .background(Color.Green)
+//                    .background(Color.Green)
                     .fillMaxWidth()
                     .weight(2f)
             ) {
                 Column(
-                    modifier = Modifier
-                        .padding(16.dp)
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
                 ) {
                     Row(
-                        modifier = Modifier
-                            .height(40.dp),
+                        modifier = Modifier,
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Halo"
+                            text = "Halo",
+                            color = Color.White
                         )
                     }
                     Row(
-                        modifier = Modifier
-                            .height(18.dp),
+                        modifier = Modifier,
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -152,53 +193,56 @@ class MainActivity : ComponentActivity() {
                             Icons.Filled.Star,
                             contentDescription = "Star Icon",
                             modifier = Modifier.size(18.dp),
-                            tint = Color.Black
+                            tint = Color.White
                         )
                         Icon(
                             Icons.Filled.Star,
                             contentDescription = "Star Icon",
                             modifier = Modifier.size(18.dp),
-                            tint = Color.Black
+                            tint = Color.White
                         )
                         Icon(
                             Icons.Filled.Star,
                             contentDescription = "Star Icon",
                             modifier = Modifier.size(18.dp),
-                            tint = Color.Black
+                            tint = Color.White
                         )
                         Icon(
                             Icons.Filled.Star,
                             contentDescription = "Star Icon",
                             modifier = Modifier.size(18.dp),
-                            tint = Color.Black
+                            tint = Color.White
                         )
                         Icon(
                             Icons.Outlined.Star,
                             contentDescription = "Star Icon",
                             modifier = Modifier.size(18.dp),
-                            tint = Color.Black
+                            tint = Color.White
                         )
+
                     }
                     Row(
-                        modifier = Modifier
-                            .height(18.dp),
+                        modifier = Modifier,
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = "4.1/5",
-                            modifier = Modifier
+                            modifier = Modifier,
+                            color = Color.White
                         )
                     }
                     Row(
                         modifier = Modifier
-                            .height(180.dp),
+//                                .height(180.dp)
+                        ,
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = "Depicting an epic 26th century conflict between humanity and an alien threat known as the Covenant, the series weaves deeply drawn personal stories with action, adventure and a richly imagined vision of the future",
-                            modifier = Modifier
+                            modifier = Modifier,
+                            color = Color.White
                         )
                     }
                 }
@@ -207,16 +251,16 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun List(images: List<Painter>) {
+    fun List(images: List<Painter>, modifier: Modifier = Modifier) {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
         ) {
             Box(
                 Modifier
-                    .background(Color.Blue)
+//                    .background(Color.Blue)
                     .fillMaxWidth()
-                    .weight(2.5f)
+                    .weight(1f)
             ) {
                 Column(
                     modifier = Modifier
@@ -224,57 +268,13 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Row(
                         modifier = Modifier
-                            .height(56.dp),
-                        horizontalArrangement = Arrangement.Start,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            Icons.Filled.Home,
-                            contentDescription = "Home Icon",
-                            modifier = Modifier.size(24.dp),
-                            tint = Color.Black
-                        )
-                        var textState by remember { mutableStateOf(TextFieldValue("")) }
-                        BasicTextField(
-                            value = textState,
-                            onValueChange = { textState = it },
-                            modifier = Modifier
-                                .weight(1f)
-                                .background(Color.LightGray, RoundedCornerShape(8.dp))
-                                .padding(vertical = 12.dp, horizontal = 16.dp)
-                                .height(20.dp),
-                            decorationBox = { innerTextField ->
-                                if (textState.text.isEmpty()) {
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Icon(
-                                            Icons.Filled.Search,
-                                            contentDescription = "Search Icon",
-                                            modifier = Modifier.size(16.dp),
-                                            tint = Color.Gray
-                                        )
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        Text(
-                                            text = "Rechercher un film",
-                                            color = Color.Gray
-                                        )
-                                    }
-                                } else {
-                                    innerTextField()
-                                }
-                            }
-                        )
-                    }
-
-                    Spacer(Modifier.weight(2.25f))
-
-                    Row(
-                        modifier = Modifier
                             .height(36.dp),
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Vous aimerez peut être",
+                            text = ("Vous aimerez peut être"),
+                            color = Color.White,
                             modifier = Modifier
                         )
                     }
@@ -294,8 +294,8 @@ class MainActivity : ComponentActivity() {
                                     contentDescription = null,
                                     modifier = Modifier
                                         .padding(horizontal = 8.dp)
-                                        .width(200.dp)
-                                        .height(130.dp)
+                                        .weight(1f)
+                                        .fillMaxHeight()
                                         .clip(RoundedCornerShape(14.dp)),
                                     contentScale = ContentScale.Crop
                                 )
@@ -307,22 +307,61 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Preview(showBackground = true)
     @Composable
     fun MoviePreview() {
         ApplifilmTheme {
-            Scaffold {
-                Column {
-                    SearchBarWithIcon()
-                    Avis()
-                    List(images = listOf(
-                        painterResource(R.drawable.image1),
-                        painterResource(R.drawable.image2),
-                        painterResource(R.drawable.image3)
-                    ))
+            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        Box {
+                            Image(
+                                painter = painterResource(R.drawable.imagehalo),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(Color.Black),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                        Column(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .fillMaxWidth()
+                        ) {
+                            Box(
+                                Modifier
+                                    .weight(1f)
+                                    .fillMaxHeight()
+                                    .fillMaxWidth()
+                            ) {
+                                SearchBarWithIcon()
+                            }
+                            Spacer(modifier = Modifier.weight(2.25f))
+                            Avis(Modifier.weight(2.5f))
+                            Spacer(modifier = Modifier.weight(2.25f))
+                            List(
+                                images = listOf(
+                                    painterResource(R.drawable.image1),
+                                    painterResource(R.drawable.image2),
+                                    painterResource(R.drawable.image3)
+                                ),
+                                modifier = Modifier.weight(2f)
+                            )
+                        }
+                    }
                 }
             }
         }
     }
 }
+
