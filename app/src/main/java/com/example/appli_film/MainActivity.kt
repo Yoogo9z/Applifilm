@@ -41,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -49,71 +50,16 @@ import androidx.compose.ui.unit.dp
 import com.example.appli_film.ui.theme.ApplifilmTheme
 import com.example.appli_film.components.ImageScroll
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            ApplifilmTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                        ) {
-                            Box {
-                                Image(
-                                    painter = painterResource(R.drawable.imagehalo),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .background(Color.Black),
-                                    contentScale = ContentScale.Crop
-                                )
-                                Box(
-                                    modifier = Modifier
-                                        .background(Color(0f, 0f, 0f, 0.75f))
-                                        .fillMaxSize()
-                                )
-
-                            }
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .fillMaxWidth()
-                                    .padding(innerPadding)
-                                    .padding(start = 16.dp)
-                            ) {
-                                Box(
-                                    Modifier
-                                        .weight(1f)
-                                        .fillMaxHeight()
-                                        .fillMaxWidth()
-                                ) {
-                                    SearchBarWithIcon()
-                                }
-                                Spacer(modifier = Modifier.weight(2.25f))
-                                Avis(Modifier.weight(2.5f))
-                                Spacer(modifier = Modifier.weight(2.25f))
-                                List(
-                                    images = listOf(
-                                        painterResource(R.drawable.image1),
-                                        painterResource(R.drawable.image2),
-                                        painterResource(R.drawable.image3)
-                                    ),
-                                    modifier = Modifier.weight(2f)
-                                )
-                            }
-                        }
-                    }
-                }
+    class MainActivity : ComponentActivity() {
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            enableEdgeToEdge()
+            window.navigationBarColor = Color.Black.toArgb()
+            window.statusBarColor = Color.Black.toArgb()
+            setContent {
+                MoviePreview()
             }
         }
-    }
 
     @Composable
     fun SearchBarWithIcon(modifier: Modifier = Modifier) {
@@ -141,6 +87,8 @@ class MainActivity : ComponentActivity() {
                     )
                     Spacer(modifier = Modifier.width(100.dp))
                     BasicTextField(
+//                        value = query,
+//                        onValueChange = { println(it) }
                         value = textState,
                         onValueChange = { textState = it },
                         modifier = Modifier
@@ -335,7 +283,7 @@ class MainActivity : ComponentActivity() {
 
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-    @Preview(showBackground = true)
+    @Preview(showBackground = true, showSystemUi = true)
     @Composable
     fun MoviePreview() {
         ApplifilmTheme {
